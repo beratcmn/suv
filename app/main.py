@@ -4,6 +4,7 @@ from pathlib import Path
 
 import cli.set
 import cli.show
+import cli.create
 
 CONFIG_FILE = Path.home() / ".suv.json"
 DEFAULT_VENV_PATH = Path.home() / "suv-venvs"
@@ -28,6 +29,7 @@ VENV_PATH = Path(
 app = typer.Typer()
 app.add_typer(cli.set.app, name="set")
 app.add_typer(cli.show.app, name="show")
+app.add_typer(cli.create.app, name="create")
 
 
 def check_missing_venv_path():
