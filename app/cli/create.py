@@ -32,6 +32,7 @@ def venv(name: str):
 
     if activate:
         typer.echo(f"Activating virtual environment {name}...")
+        os.system("deactivate")
         activate_script = venv_path / "Scripts/activate_this.py"
         with open(activate_script) as file_:
             exec(file_.read(), dict(__file__=activate_script))
