@@ -5,6 +5,7 @@ from pathlib import Path
 import cli.set
 import cli.show
 import cli.create
+import cli.activate
 
 CONFIG_FILE = Path.home() / ".suv.json"
 DEFAULT_VENV_PATH = Path.home() / "suv-venvs"
@@ -35,7 +36,36 @@ def check_missing_venv_path():
 
 
 @app.command()
-def create(name: str = ""):
+def list(echo: bool = True):
+    """Lists all the virtual environments."""
+
+    if CONFIG_FILE.exists():
+        with open(CONFIG_FILE, "r", encoding="UTF-8") as f:
+            config = json.load(f)
+            venv_path = Path(config["venv_path"])
+    else:
+        venv_path = DEFAULT_VENV_PATH
+
+    if not venv_path.exists():
+        typer.echo("No virtual environments found.")
+        raise typer.Exit()
+
+    venvs = []
+    if echo:
+        typer.echo("Virtual environments:")
+
+    for venv in venv_path.iterdir():
+        if venv.is_dir():
+            venvs.append(venv.name)
+
+            if echo:
+                typer.echo(f" - {venv.name}")
+
+    return venvs
+
+
+@app.command()
+def create(name: str):
     """Create a new virtual environment.
 
     Args:
@@ -47,6 +77,28 @@ def create(name: str = ""):
 
     typer.echo(f"Creating virtual environment {name}...")
     cli.create.venv(name=name)
+
+
+@app.command()
+def activate(name: str):
+    """Activate a virtual environment.
+
+    Args:
+        name (str): The name of the virtual environment.
+    """
+    venvs = list(echo=False)
+
+    if name == "":
+        name = typer.prompt("Enter the name of the virtual environment")
+
+    if not venvs:
+        typer.echo("No virtual environments found.")
+        raise typer.Exit()
+
+    if name not in venvs:
+        typer.echo(f"Virtual environment {name} not found.")
+        raise typer.Exit()
+    cli.activate.activate(name=name)
 
 
 if __name__ == "__main__":

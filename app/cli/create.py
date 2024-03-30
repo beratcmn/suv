@@ -2,14 +2,9 @@ import typer
 from pathlib import Path
 import json
 import os
-
-from pynput.keyboard import Controller as KeyboardController
-from pynput.keyboard import Key
-
+import cli.activate
 
 CONFIG_FILE = Path.home() / ".suv.json"
-
-keyboard = KeyboardController()
 
 
 def venv(name: str):
@@ -21,12 +16,9 @@ def venv(name: str):
     venv_path = Path(path) / name
     os.system(f"python -m uv venv {venv_path}")
 
-    activate = typer.confirm(
+    activate_prompt = typer.confirm(
         "Do you want to activate the new virtual environment?", default=True
     )
 
-    if activate:
-        typer.echo(f"Activating virtual environment {name}...")
-        activation_path = str(venv_path / "Scripts/activate").replace("\\", "/")
-        keyboard.type(f"source {activation_path}")
-        keyboard.press(Key.enter)
+    if activate_prompt:
+        cli.activate.activate(venv_path)
