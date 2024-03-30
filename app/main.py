@@ -9,7 +9,7 @@ import cli.create
 CONFIG_FILE = Path.home() / ".suv.json"
 DEFAULT_VENV_PATH = Path.home() / "suv-venvs"
 
-config = {"version": "0.0.1", "venv_path": str(DEFAULT_VENV_PATH), "shell": "git bash"}
+config = {"venv_path": str(DEFAULT_VENV_PATH), "shell": "git bash"}
 
 if CONFIG_FILE.exists():
     with open(CONFIG_FILE, encoding="UTF-8") as f:
