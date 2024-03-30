@@ -1,6 +1,6 @@
 # suv
 
-suv (shared-uv) is cli tool based on uv for managing python virtual environments
+suv (shared-uv) is cli tool based on [uv](https://github.com/astral-sh/uv) for managing python virtual environments
 
 ## Why?
 
