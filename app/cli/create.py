@@ -9,20 +9,10 @@ from pynput.keyboard import Key
 
 CONFIG_FILE = Path.home() / ".suv.json"
 
-app = typer.Typer()
 keyboard = KeyboardController()
 
 
-@app.command()
 def venv(name: str):
-    """Create a new virtual environment.
-
-    Args:
-        name (str): The name of the virtual environment.
-    """
-
-    typer.echo(f"Creating virtual environment {name}...")
-
     with open(CONFIG_FILE, "r", encoding="UTF-8") as f:
         config = json.load(f)
 
@@ -37,14 +27,6 @@ def venv(name: str):
 
     if activate:
         typer.echo(f"Activating virtual environment {name}...")
-        # os.system("deactivate")
-        # activate_script = venv_path / "Scripts/activate_this.py"
-        # with open(activate_script) as file_:
-        #     exec(file_.read(), dict(__file__=activate_script))
         activation_path = str(venv_path / "Scripts/activate").replace("\\", "/")
         keyboard.type(f"source {activation_path}")
         keyboard.press(Key.enter)
-
-
-if __name__ == "__main__":
-    app()

@@ -26,13 +26,27 @@ VENV_PATH = Path(
 app = typer.Typer()
 app.add_typer(cli.set.app, name="set")
 app.add_typer(cli.show.app, name="show")
-app.add_typer(cli.create.app, name="create")
 
 
 def check_missing_venv_path():
     if not VENV_PATH.exists():
         typer.echo(f"Creating {VENV_PATH}...")
         VENV_PATH.mkdir(parents=True)
+
+
+@app.command()
+def create(name: str = ""):
+    """Create a new virtual environment.
+
+    Args:
+        name (str): The name of the virtual environment.
+    """
+
+    if name == "":
+        name = typer.prompt("Enter the name of the virtual environment")
+
+    typer.echo(f"Creating virtual environment {name}...")
+    cli.create.venv(name=name)
 
 
 if __name__ == "__main__":
