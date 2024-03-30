@@ -16,6 +16,8 @@ suv uses a configuration file named `suv.json` in the user's home directory. The
 ## Todo
 
 - [x] Basic functionality
+- [ ] Create a package
+- [ ] Release the alpha version
 - [ ] Add Python path to the config
 - [ ] Add support for Windows
 - [ ] Add support for Mac and Linux
