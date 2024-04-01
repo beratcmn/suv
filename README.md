@@ -20,6 +20,6 @@ suv uses a configuration file named `suv.json` in the user's home directory. The
 - [ ] Release the alpha version
 - [ ] Add Python path to the config
 - [ ] Add support for Windows
-- [ ] Add support for Mac and Linux
+- [x] Add support for Mac and Linux
 - [ ] Add support for other shells
 - [ ] Add support for `pip`
