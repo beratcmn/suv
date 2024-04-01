@@ -31,7 +31,7 @@ app.add_typer(cli.show.app, name="show")
 
 def check_missing_venv_path():
     if not VENV_PATH.exists():
-        typer.echo(f"Creating {VENV_PATH}...")
+        typer.echo(f"Creating Virtual Environment: {VENV_PATH}...")
         VENV_PATH.mkdir(parents=True)
 
 
